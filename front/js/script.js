@@ -33,7 +33,7 @@ function mainIndex(){
                 let objetCarte = document.createElement("div");
                 objetCarte.classList.add("a");
                 objetCarte.innerHTML = 
-                `<a class="a" href=${urlForEachArticle} id=${objets[objet]._id}>
+                `<a class="a" href=${urlForEachArticle} id=${objets[objet]._id} alt = "image d'un canapé">
                 <article>
                 
                 <img src=${objets[objet].imageUrl}>
