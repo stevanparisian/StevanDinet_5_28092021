@@ -16,6 +16,7 @@ function mainArticle() {
         const articleCanape = response;
 
         createCartes();
+        ajoutAuPanier();
         
      
 
@@ -23,6 +24,7 @@ function mainArticle() {
         function createCartes() {
             let articleCarte = document.createElement("div");
             articleCarte.classList.add("article");
+            
     
             articleCarte.innerHTML = 
             `
@@ -65,6 +67,40 @@ function mainArticle() {
           `;
     
             mainArticle.appendChild(articleCarte);
-        }        
+        }
+        // Ajout l'article de la page au panier
+        function ajoutAuPanier() {
+
+          const buttonSendPanier = document.querySelector("button");
+          
+
+          buttonSendPanier.addEventListener("click", function(event) {
+  
+              event.preventDefault();
+
+              const nameArticleChoisi = document.querySelector("h1");
+              const urlArticleChoisi = window.location.search;
+             
+              
+              const articleChoisi = {
+                  name: nameArticleChoisi.textContent,
+                  id: urlArticleChoisi.slice(1),
+              };
+
+              const stringArticleChoisi = JSON.stringify(articleChoisi)
+
+              let getPanier = localStorage.getItem("panierKey");
+
+              let numGetPanier = JSON.parse(getPanier);
+
+              numGetPanier.push(stringArticleChoisi);
+
+              let strNumGetPanier = JSON.stringify(numGetPanier);
+
+              localStorage.setItem("panierKey", strNumGetPanier);
+
+              indicateurNbArticlePanier()
+          }) 
+      }        
     }));
 }
