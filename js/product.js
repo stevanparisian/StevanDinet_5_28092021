@@ -14,8 +14,12 @@ function mainArticle() {
     .then(function(response) {
 
         const articleCanape = response;
+        const colors = response.colors;
+
+   
 
         createCartes();
+        addColors();
         ajoutAuPanier();
         
      
@@ -29,7 +33,7 @@ function mainArticle() {
             articleCarte.innerHTML = 
             `
             <div class="item__img">
-              <img src=${articleCanape.imageUrl} alt="Photographie d'un canapé">
+              <img id="imageUrl" src=${articleCanape.imageUrl} alt="Photographie d'un canapé">
             </div>
             <div class="item__content">
 
@@ -47,9 +51,7 @@ function mainArticle() {
                 <div class="item__content__settings__color">
                   <label for="color-select">Choisir une couleur :</label>
                   <select name="color-select" id="colors">
-                      <option value="">--SVP, choisissez une couleur --</option>
-                      <option value="vert">vert</option>
-                      <option value="blanc">blanc</option> 
+                      
                   </select>
                 </div>
 
@@ -68,6 +70,19 @@ function mainArticle() {
     
             mainArticle.appendChild(articleCarte);
         }
+         // Ajout des couleurs dans les cartes
+         function addColors() {
+
+          const colorsIndex = document.querySelector('#colors');
+          
+          for (let nbColors = 0; nbColors < colors.length; nbColors++) {
+              colorsIndex.innerHTML += 
+              `
+                    <option value="${colors[nbColors]}">${colors[nbColors]}</option>
+                `;
+          };
+          
+      }
         // Ajout l'article de la page au panier
         function ajoutAuPanier() {
 
@@ -80,11 +95,17 @@ function mainArticle() {
 
               const nameArticleChoisi = document.querySelector("h1");
               const urlArticleChoisi = window.location.search;
+              const couleurChoisi = document.querySelector("#colors");
+              const prixArticleChoisi = document.querySelector("#price");
+              const imageArticleChoisi = document.querySelector("#imageUrl")
              
               
               const articleChoisi = {
                   name: nameArticleChoisi.textContent,
                   id: urlArticleChoisi.slice(1),
+                  color: couleurChoisi.options[couleurChoisi.selectedIndex].text,
+                  price: prixArticleChoisi.textContent,
+                  imageUrl: imageArticleChoisi.textContent
               };
 
               const stringArticleChoisi = JSON.stringify(articleChoisi)
@@ -101,6 +122,7 @@ function mainArticle() {
 
               indicateurNbArticlePanier()
           }) 
-      }        
+      }    
+          
     }));
 }
