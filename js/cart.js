@@ -1,6 +1,5 @@
 pagePanier()
 
-
 function pagePanier() {
 
     let getPanier = localStorage.getItem("panierKey");
@@ -88,6 +87,7 @@ function pagePanier() {
     `<p>Total (<span id="totalQuantity"><!-- 2 --></span> articles) : <span id="totalPrice">${totalPanier}</span> €</p>`;
 
     affichageTotal.appendChild(blocTotal);
+
     
 }
 
@@ -105,6 +105,262 @@ function deleteArt(indexDel) {
     
 }
 
+//-------------------------------------------
+// Formulaire panier Validation
+//-------------------------------------------
+let form = document.querySelector(".cart__order__form")
 
 
+envoieFormulaire()
 
+
+function envoieFormulaire() {
+
+    let button = document.querySelector(".button");
+    
+    button.addEventListener('click', function(e) {
+
+        e.preventDefault();
+
+        let getPanier = localStorage.getItem("panierKey");
+        let numGetPanier = JSON.parse(getPanier);
+
+
+        if (validLetter(form.firstName) && validLetter(form.lastName) && validAddress(form.address) && validLetter(form.city) && validEmail(form.email)) {
+            
+            if (numGetPanier == 0) {
+                
+                alert ("Vous ne pouvez pas commander un panier qui est vide, veuillez sélectionner un article au minimum");
+
+            } else {
+
+                // Récupération des srtings articles du panier
+                let products = [];
+
+                for (let articleInPanier in numGetPanier) {
+    
+                    let articlePanier = numGetPanier[articleInPanier];
+                    let convertInArray = JSON.parse(articlePanier);
+                    
+                    let getIdArtPanier = convertInArray.id;
+                    
+                    products.push(getIdArtPanier);
+                    
+                }
+                //---------------------------------------------
+
+              
+                // Récupération du formulaire
+                let contact = {
+                    firstName: form.firstName.value,
+                    lastName: form.lastName.value,
+                    address: form.address.value,
+                    city: form.city.value,
+                    email: form.email.value
+                };
+                //---------------------------------------------
+                
+
+                // Envoie des données avec FETCH
+                fetch("http://localhost:3000/api/products/order",
+                {
+                    headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                    },
+                    method: "POST",
+                    body: JSON.stringify({contact, products})
+                })
+                .then(response => response.json())
+                .then(function(response) {
+
+                    let objetRetour = response;
+                    
+                    console.log(objetRetour["orderId"]);
+                    localStorage.setItem("orderKey", objetRetour["orderId"]);
+                    
+                    let totaldupanier = document.querySelector("#totalPrice");
+                    localStorage.setItem("totalKey", totaldupanier.textContent);
+
+
+                    alert("Veuillez cliquer sur OK pour comfirmer votre commande.");
+                    location.replace("confirmation.html");
+                })
+                .catch(function(error){
+
+                    console.log(error)
+
+                })
+
+            }
+
+        } else {
+
+            if (numGetPanier == 0) {
+                alert ("Votre panier est vide, veuillez sélectionner au moins un article et le formulaire n'est pas correctement rempli");
+            } else {
+                alert ("Le formulaire n'est pas correctement rempli");
+            }
+        } 
+    });
+}
+
+// --- Vérification Formulaire avant envoie
+function verifForm() {
+
+  form.firstName.addEventListener('change', function() {
+      validLetter(this);
+
+      const msgError = document.querySelector("#firstN");
+
+      if(validLetter(this) == false) {
+          
+          msgError.classList.remove("cache");
+
+      } else {
+
+          msgError.classList.add("cache");
+
+      }
+  });
+
+  form.lastName.addEventListener('change', function() {
+      validLetter(this);
+
+      const msgError = document.querySelector("#lastN");
+      
+      if(validLetter(this) == false) {
+          
+          msgError.classList.remove("cache");
+
+      } else {
+
+          msgError.classList.add("cache");
+
+      }
+
+  });
+
+  form.address.addEventListener('change', function() {
+      validAddress(this);
+
+      const msgError = document.querySelector("#addrS");
+      
+      if(validLetter(this) == false) {
+          
+          msgError.classList.remove("cache");
+
+      } else {
+
+          msgError.classList.add("cache");
+
+      }
+      
+  });
+
+  form.city.addEventListener('change', function() {
+      validLetter(this);
+
+      const msgError = document.querySelector("#citY");
+      
+      if(validLetter(this) == false) {
+          
+          msgError.classList.remove("cache");
+
+      } else {
+
+          msgError.classList.add("cache");
+
+      }
+      
+  });
+
+  form.email.addEventListener('change', function() {
+      validEmail(this);
+
+      const msgError = document.querySelector("#emaiL");
+      
+      if(validLetter(this) == false) {
+          
+          msgError.classList.remove("cache");
+
+      } else {
+
+          msgError.classList.add("cache");
+
+      }
+  });
+}
+
+// REGEX pour formulaire
+function validEmail(inputEmail) {
+  let emailRegex = new RegExp('^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$', 'g');
+
+  let testEmail = emailRegex.test(inputEmail.value);
+
+  if (testEmail) {
+      inputEmail.classList.add("borderGreen");
+      inputEmail.classList.remove("borderRed");
+  } else {
+      inputEmail.classList.add("borderRed");
+      inputEmail.classList.remove("borderGreen");
+  }
+
+  if (inputEmail.value.length == 0) {
+      inputEmail.classList.remove("borderGreen");
+      inputEmail.classList.remove("borderRed");        
+  }
+
+  return testEmail;
+}
+
+function validLetter(inputLetter) {
+  let letterRegex = new RegExp('[a-zA-Z ,.-]$', 'g');
+
+  let testLetter = letterRegex.test(inputLetter.value);
+
+  if (inputLetter.value.length < 2) {
+      inputLetter.classList.add("borderRed");
+      inputLetter.classList.remove("borderGreen");
+      testLetter = false;
+  } else if (testLetter) {
+      inputLetter.classList.add("borderGreen");
+      inputLetter.classList.remove("borderRed");
+  } else {
+      inputLetter.classList.add("borderRed");
+      inputLetter.classList.remove("borderGreen");
+  }
+
+
+  if (inputLetter.value.length == 0) {
+      inputLetter.classList.remove("borderGreen");
+      inputLetter.classList.remove("borderRed");        
+  }
+  
+  return testLetter;
+}
+
+function validAddress(inputAddress) {
+  let addressRegex = new RegExp ('[0-9a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.-]$', 'g');
+
+  let addressTest = addressRegex.test(inputAddress.value);
+
+  if (inputAddress.value.length < 2) {
+      inputAddress.classList.add("borderRed");
+      inputAddress.classList.remove("borderGreen");
+      addressTest = false;
+  } else if (addressTest) {
+      inputAddress.classList.add("borderGreen");
+      inputAddress.classList.remove("borderRed");
+  } else {
+      inputAddress.classList.add("borderRed");
+      inputAddress.classList.remove("borderGreen");
+  }
+
+  if (inputAddress.value.length == 0) {
+      inputAddress.classList.remove("borderGreen");
+      inputAddress.classList.remove("borderRed");
+  }
+
+  return addressTest;
+}
