@@ -58,7 +58,7 @@ function pagePanier() {
         let i = 0
 
         for (i; i < numOfArticles; i++) {
-            let artPanier = document.querySelector(".cart__item__content");
+            let artPanier = document.querySelector(".articles-panier-beta");
             artPanier.innerHTML += 
             `<div class="cart__item__content__settings__delete" id=${i} onclick="deleteArt(id)">
             <p class="deleteItem">Supprimer</p>
@@ -76,7 +76,7 @@ function pagePanier() {
     
     for (let j = 0; j < nbPrices; j++) {
         let strBasis = arrayAllPrices[j].textContent;
-        let newStrBasis = strBasis.substring(0, strBasis.length - 2);
+        let newStrBasis = strBasis.substring(0, strBasis.length - 1);
         let convertStrInNum = parseInt(newStrBasis);
 
         totalPanier += convertStrInNum;

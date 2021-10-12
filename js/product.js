@@ -16,7 +16,7 @@ function mainArticle() {
         const articleCanape = response;
         const colors = response.colors;
 
-   
+        
 
         createCartes();
         addColors();
@@ -33,7 +33,7 @@ function mainArticle() {
             articleCarte.innerHTML = 
             `
             <div class="item__img">
-              <img id="imageUrl" src=${articleCanape.imageUrl} alt="Photographie d'un canapé">
+              <img class="image" src=${articleCanape.imageUrl} alt="Photographie d'un canapé">
             </div>
             <div class="item__content">
 
@@ -46,6 +46,7 @@ function mainArticle() {
                 <p class="item__content__description__title">Description :</p>
                 <p id="description">${articleCanape.description}</p>
               </div>
+             
 
               <div class="item__content__settings">
                 <div class="item__content__settings__color">
@@ -97,7 +98,7 @@ function mainArticle() {
               const urlArticleChoisi = window.location.search;
               const couleurChoisi = document.querySelector("#colors");
               const prixArticleChoisi = document.querySelector("#price");
-              const imageArticleChoisi = document.querySelector("#imageUrl")
+              const imageArticleChoisi = document.querySelector(".image")
              
               
               const articleChoisi = {
@@ -105,8 +106,11 @@ function mainArticle() {
                   id: urlArticleChoisi.slice(1),
                   color: couleurChoisi.options[couleurChoisi.selectedIndex].text,
                   price: prixArticleChoisi.textContent,
-                  imageUrl: imageArticleChoisi.textContent
+                  imageUrl: imageArticleChoisi.textContent,
+                
               };
+
+            
 
               const stringArticleChoisi = JSON.stringify(articleChoisi)
 
@@ -115,14 +119,15 @@ function mainArticle() {
               let numGetPanier = JSON.parse(getPanier);
 
               numGetPanier.push(stringArticleChoisi);
-
+              
               let strNumGetPanier = JSON.stringify(numGetPanier);
-
+              
               localStorage.setItem("panierKey", strNumGetPanier);
-
+              
+              
               indicateurNbArticlePanier()
-          }) 
-      }    
-          
-    }));
-}
+            }) 
+          }    
+        }));
+      }
+      
