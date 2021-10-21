@@ -68,6 +68,7 @@ h2 {
 .cart__item__content__settings__delete p {
 	text-align: center;
 	text-align-last: center;
+	margin-right:40px ;
 }
 .cart__item__content__settings__delete p:hover {
 	cursor: pointer;

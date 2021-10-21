@@ -1,3 +1,105 @@
+/* 
+let cart = document.querySelector(".cart-card__recap");
+let copyOfLS = JSON.parse(localStorage.getItem("panierKey"));
+
+main();
+
+function main() {
+  displayCart();
+  countTotalInCart();
+  toEmptyCart();
+  
+}
+
+function displayCart() {
+  let test = document.querySelector(".width-to-empty-cart");
+  let cartCard = document.querySelector(".cart-card");
+  let emptyCart = document.querySelector(".if-empty-cart");
+
+  // Si le tableau copié du localStorage contient au moins un objet, on affiche le panier et on supprime le message d'erreur.
+  if (localStorage.getItem("panierKey")) {
+    cartCard.style.display = "flex";
+    cartCard.style.flexDirection = "column";
+    cartCard.style.justifyContent = "space-around";
+    emptyCart.style.display = "none";
+  }
+
+  // Pour chaque objet dans le tableau copié du localStorage, on crée les divs de l'affichage du panier et on les remplit avec les données du tableau.
+  for (let produit in copyOfLS) {
+    let articlePanier = copyOfLS[produit];
+    let convertInArray = JSON.parse(articlePanier);
+
+    let productRow = document.createElement("div");
+    cart.insertBefore(productRow, test);
+    productRow.classList.add("cart-card__recap__row", "product-row");
+
+    let productName = document.createElement("div");
+    productRow.appendChild(productName);
+    productName.classList.add("cart-card__recap__title");
+    productName.innerHTML = convertInArray.name;
+    
+    let productQuantity = document.createElement("div");
+    productRow.appendChild(productQuantity);
+    productQuantity.classList.add("cart-card__recap__title", "title-quantity");
+    productQuantity.innerHTML = convertInArray.quantity;
+    
+    let productPrice = document.createElement("div");
+    productRow.appendChild(productPrice);
+    productPrice.classList.add(
+        "cart-card__recap__title",
+        "data-price",
+        "price"
+        );
+        
+        console.log(convertInArray.name);
+    // Affichage du prix avec le formatage €
+    productPrice.innerHTML = new Intl.NumberFormat("fr-FR", {
+      style: "currency",
+      currency: "EUR",
+    }).format(convertInArray.price * convertInArray.quantity);
+  }
+}
+function countTotalInCart() {
+    let arrayOfPrice = [];
+    let totalPrice = document.querySelector(".total");
+  
+    // On push chaque prix du DOM dans un tableau
+    let productPriceAccordingToQuantity = document.querySelectorAll(".price");
+    for (let price in productPriceAccordingToQuantity) {
+      arrayOfPrice.push(productPriceAccordingToQuantity[price].innerHTML);
+    }
+  
+    // On enlève les undefined du tableau
+    arrayOfPrice = arrayOfPrice.filter((el) => {
+      return el != undefined;
+    });
+  
+    // Transformer en nombre chaque valeur du tableau
+    arrayOfPrice = arrayOfPrice.map((x) => parseFloat(x));
+  
+    // Additionner les valeurs du tableau pour avoir le prix total
+    const reducer = (acc, currentVal) => acc + currentVal;
+    arrayOfPrice = arrayOfPrice.reduce(reducer);
+  
+    // Affichage du prix avec formatage €
+    totalPrice.innerText = `Total : ${(arrayOfPrice = new Intl.NumberFormat(
+      "fr-FR",
+      {
+        style: "currency",
+        currency: "EUR",
+      }
+    ).format(arrayOfPrice))}`;
+  }
+  
+  function toEmptyCart() {
+  
+    // Lorsque qu'on clique sur le bouton, le panier se vide ainsi que le localStorage
+    const buttonToEmptyCart = document.querySelector(".to-empty-cart");
+    buttonToEmptyCart.addEventListener("click", () => {
+      localStorage.clear();
+    });
+  } */
+
 pagePanier()
 
 function pagePanier() {
@@ -29,25 +131,23 @@ function pagePanier() {
                 <div class="cart__item__content">
                   <div class="cart__item__content__titlePrice">
                     <h2>${convertInArray.name}</h2>
-                    <p class="price">${convertInArray.price}€</p>
-                  </div>
-                  <div class="cart__item__content__settings">
-                    <div class="cart__item__content__settings__quantity">
-                      <p>Qté : </p>
-                      <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="42">
+                    <p class="price">${convertInArray.price * convertInArray.quantity}€</p>
                     </div>
-                  </div>
+                    <div class="cart__item__content__settings">
+                    <div class="cart__item__content__settings__quantity">
+                      <p>Qté : ${convertInArray.quantity}</p>
+                    </div>
+                    </div>
                 </div>
               </article>
         `;
-
-      
 
         tableauPanier.appendChild(carteFormatPanier);
 
     }
 
-    /* Ajout du bouton supprimer */
+
+    /* Ajout du bouton supprimer  */
 
     addButtonDelete();
 
@@ -59,7 +159,8 @@ function pagePanier() {
         for (i; i < numOfArticles; i++) {
             let artPanier = document.querySelector(".articles-panier-beta");
             artPanier.innerHTML += 
-            `<div class="cart__item__content__settings__delete" id=${i} onclick="deleteArt(id)">
+            `
+            <div class="cart__item__content__settings__delete" id=${i} onclick="deleteArt(id)">
             <p class="deleteItem">Supprimer</p>
           </div>`;
             artPanier.classList.add("articles-panier");
