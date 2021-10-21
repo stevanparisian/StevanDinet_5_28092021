@@ -1,3 +1,4 @@
+// Lien entre le produit de la bage d'acceuil et la page
 mainArticle()
 
 function mainArticle() {
@@ -33,7 +34,8 @@ function mainArticle() {
             articleCarte.innerHTML = 
             `
             <div class="item__img">
-              <img class="image" src=${articleCanape.imageUrl} alt="Photographie d'un canapé">
+              <img src=${articleCanape.imageUrl} alt="Photographie d'un canapé">
+              <p id="image">${articleCanape.imageUrl}</p>
             </div>
             <div class="item__content">
 
@@ -98,7 +100,7 @@ function mainArticle() {
               const urlArticleChoisi = window.location.search;
               const couleurChoisi = document.querySelector("#colors");
               const prixArticleChoisi = document.querySelector("#price");
-              const imageArticleChoisi = document.querySelector(".image")
+              const imageArticleChoisi = document.querySelector("#image");
              
               
               const articleChoisi = {
@@ -107,6 +109,9 @@ function mainArticle() {
                   color: couleurChoisi.options[couleurChoisi.selectedIndex].text,
                   price: prixArticleChoisi.textContent,
                   imageUrl: imageArticleChoisi.textContent,
+                  
+                  quantity: parseFloat(document.querySelector("#quantity").value)
+                  
                 
               };
 

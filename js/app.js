@@ -31,7 +31,7 @@ function indicateurNbArticlePanier() {
         `
                 <li>Panier</li>
                 <div class="nb-articles cache"> (${nbArticleInPanier}) </div>
-                <i class="fas fa-shopping-basket"></i>
+               
         
         `;
 

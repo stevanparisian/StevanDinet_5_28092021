@@ -1,5 +1,6 @@
-mainIndex()
+// Sélection de l'element pour insérer les cartes objets
 
+mainIndex()
 
 function mainIndex(){
 
@@ -17,26 +18,22 @@ function mainIndex(){
 
         const objets = response;
        
+// Répartition des objets en forme de carte
 
         creationCartePourProduits()
-        
-        
+
         function creationCartePourProduits() {
-            // Répartition des objets en forme de carte
             for (let objet in objets) {
             
-               
-
-                
                 const urlForEachArticle = "product.html" + "?" + objets[objet]._id;
             
                 let objetCarte = document.createElement("div");
                 objetCarte.classList.add("a");
                 objetCarte.innerHTML = 
-                `<a class="a" href=${urlForEachArticle} id=${objets[objet]._id} alt = "image d'un canapé">
+                `<a class="a" href=${urlForEachArticle} id=${objets[objet]._id}>
                 <article>
                 
-                <img src=${objets[objet].imageUrl}>
+                <img src=${objets[objet].imageUrl} alt = "image d'un canapé">
                 
                 <h3 class="productName">${objets[objet].name}</h3>
                
@@ -44,13 +41,8 @@ function mainIndex(){
                 </article>
                 </a>
                 `;
-
-               
-
-        
-                mainIndex.appendChild(objetCarte);
+                 mainIndex.appendChild(objetCarte);
             }
         }
     })
-    
 }   

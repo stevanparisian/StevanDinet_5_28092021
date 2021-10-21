@@ -41,7 +41,7 @@ function pagePanier() {
               </article>
         `;
 
-        
+      
 
         tableauPanier.appendChild(carteFormatPanier);
 

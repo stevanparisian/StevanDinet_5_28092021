@@ -267,3 +267,9 @@ footer .footerSecondary {
     width: 75%;
   }
 }
+
+@media (max-width: 374px) { 
+	.items a {
+		width: 10%;
+	  }
+}
