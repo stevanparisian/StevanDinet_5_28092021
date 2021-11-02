@@ -128,6 +128,7 @@ function mainArticle() {
 
             localStorage.setItem("panierKey", strNumGetPanier);
 
+            alert("Votre article à bien été ajouté au panier");
 
             indicateurNbArticlePanier()
           })

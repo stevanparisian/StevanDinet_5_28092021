@@ -18,6 +18,7 @@ function pagePanier() {
         let articlePanier = numGetPanier[articleChoisi];
 
         let convertInArray = JSON.parse(articlePanier);
+        
 
         const tableauPanier = document.querySelector("#cart__items");
 
@@ -37,11 +38,8 @@ function pagePanier() {
                     </div>
                     <div class="cart__item__content__settings">
                     <div class="cart__item__content__settings__quantity">
-                    
                         <p>Qté : ${convertInArray.quantity}</p>
-                        <input type="number" id="itemQuantity" name="itemQuantity" min="1" max="100" value=${convertInArray.quantity}>
-                      <button id="btn-quantity">confirmer</button>
-                    </div>
+                     </div>
                     </div>
                 </div>
               </article>
@@ -49,105 +47,54 @@ function pagePanier() {
 
         tableauPanier.appendChild(carteFormatPanier);
 
-        /* ajoutAuPanier();
-
-        function ajoutAuPanier() {
-
-            const buttonSendPanier = document.querySelector("#btn-quantity");
-            
-            
-            
-            buttonSendPanier.addEventListener("click", function (event) {
-                
-                event.preventDefault();
-                
-                const nameArticleChoisi = document.querySelector("cart__item");
-                const prixArticleChoisi = document.querySelector(".price");
-                const imageArticleChoisi = document.querySelector("#image");
-                
-                
-                const articleChoisi = {
-                    name: nameArticleChoisi.textContent,
-                    price: prixArticleChoisi.textContent,
-                    imageUrl: imageArticleChoisi.textContent,
-                    quantity: parseFloat(document.querySelector("#itemQuantity").value)
-                    
-                };
-                
-                /* indiquer le nombre d'article dans le panier 
-                
-                const stringArticleChoisi = JSON.stringify(articleChoisi)
-                
-            
-            let getPanier = localStorage.getItem("panierKey");
-            
-            let numGetPanier = JSON.parse(getPanier);
-            
-            numGetPanier.push(stringArticleChoisi);
-            
-            let strNumGetPanier = JSON.stringify(numGetPanier);
-            
-            localStorage.setItem("panierKey", strNumGetPanier);
-            
-            
-            indicateurNbArticlePanier()
-        })
-    } */
-};
-
-      
-
-
-       
-
-
-
+    };
+    
     /* Ajout du bouton supprimer  */
-
+    
     addButtonDelete();
-
+    
     function addButtonDelete() {
-
+        
         numOfArticles = numGetPanier.length;
         let i = 0
-
+        
         for (i; i < numOfArticles; i++) {
             let artPanier = document.querySelector(".articles-panier-beta");
             artPanier.innerHTML +=
-                `       
+            `       
             <div class="cart__item__content__settings__delete" id=${i} onclick="deleteArt(id)">
             <p class="deleteItem">Supprimer</p>
-          </div>`;
+            </div>`;
             artPanier.classList.add("articles-panier");
             artPanier.classList.remove("articles-panier-beta");
         }
     }
-
+    
     /* Prix total panier */
-
+    
     const allPrices = document.querySelectorAll(".price");
     const arrayAllPrices = Array.from(allPrices)
-
+    
     const nbPrices = arrayAllPrices.length
     let totalPanier = 0;
-
+    
     for (let j = 0; j < nbPrices; j++) {
         let strBasis = arrayAllPrices[j].textContent;
         let newStrBasis = strBasis.substring(0, strBasis.length - 1);
         let convertStrInNum = parseInt(newStrBasis);
-
+        
         totalPanier += convertStrInNum;
     }
-
+    
     const affichageTotal = document.querySelector(".cart__price");
     let blocTotal = document.createElement("div");
     blocTotal.innerHTML =
-        `<p>Total : <span id="totalPrice">${totalPanier}</span> €</p>`;
-
+    `<p>Total : <span id="totalPrice">${totalPanier}</span> €</p>`;
+    
     affichageTotal.appendChild(blocTotal);
-
-
+       
 }
+
 /* Message quand on supprime un article */
 
 function deleteArt(indexDel) {

@@ -12,7 +12,6 @@ function mainIndex() {
         .then(function (response) {
 
             return response.json();
-
         })
         .then(function (response) {
 
@@ -37,7 +36,6 @@ function mainIndex() {
                 
                 <h3 class="productName">${objets[objet].name}</h3>
                
-                
                 </article>
                 </a>
                 `;
