@@ -23,6 +23,7 @@ function indicateurNbArticlePanier() {
 
     let arrayGetPanier = JSON.parse(getPanier);
     const nbArticleInPanier = arrayGetPanier.length;
+    
 
 
 
@@ -40,4 +41,6 @@ function indicateurNbArticlePanier() {
         let affichageNbArticlesPanier = document.querySelector(".nb-articles");
         affichageNbArticlesPanier.classList.remove("cache");
     }
+
+    
 }

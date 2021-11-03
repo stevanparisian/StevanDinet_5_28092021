@@ -17,8 +17,6 @@ function mainArticle() {
         const articleCanape = response;
         const colors = response.colors;
 
-
-
         createCartes();
         addColors();
         ajoutAuPanier();
@@ -116,22 +114,26 @@ function mainArticle() {
             
 /* indiquer le nombre d'article dans le panier */
 
-            const stringArticleChoisi = JSON.stringify(articleChoisi)
+const stringArticleChoisi = JSON.stringify(articleChoisi)
 
-            let getPanier = localStorage.getItem("panierKey");
+let getPanier = localStorage.getItem("panierKey");
 
-            let numGetPanier = JSON.parse(getPanier);
+let numGetPanier = JSON.parse(getPanier);
 
-            numGetPanier.push(stringArticleChoisi);
+numGetPanier.push(stringArticleChoisi);
 
-            let strNumGetPanier = JSON.stringify(numGetPanier);
+let strNumGetPanier = JSON.stringify(numGetPanier);
 
-            localStorage.setItem("panierKey", strNumGetPanier);
+localStorage.setItem("panierKey", strNumGetPanier);
 
-            alert("Votre article à bien été ajouté au panier");
+alert("Votre article à bien été ajouté au panier");
 
-            indicateurNbArticlePanier()
+               indicateurNbArticlePanier()
           })
+              
+                
+           
+        
         }
       }));
 }
