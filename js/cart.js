@@ -7,18 +7,19 @@ function pagePanier() {
 
     let getPanier = localStorage.getItem("panierKey");
     let numGetPanier = JSON.parse(getPanier);
-
+    
     if (numGetPanier.length == 0) {
         const messagePanierVide = document.querySelector(".paniervide ")
         messagePanierVide.classList.remove("cache");
         
     }
-
+    
     for (let articleChoisi in numGetPanier) {
-
+        
         let articlePanier = numGetPanier[articleChoisi];
-
-        let convertInArray = JSON.parse(articlePanier);
+        
+        
+        
         
 
         const tableauPanier = document.querySelector("#cart__items");
@@ -28,18 +29,18 @@ function pagePanier() {
         carteFormatPanier.innerHTML =
             `
         
-        <article class="cart__item" data-id="${convertInArray.id}">
+        <article class="cart__item" data-id="${articlePanier.id}">
                 <div class="cart__item__img">
-                  <img src="${convertInArray.imageUrl}" alt="Photographie d'un canapé">
+                  <img src="${articlePanier.imageUrl}" alt="Photographie d'un canapé">
                 </div>
                 <div class="cart__item__content">
                   <div class="cart__item__content__titlePrice">
-                    <h2>${convertInArray.name}</h2>
-                    <p class="price">${convertInArray.price * convertInArray.quantity}€</p>
+                    <h2>${articlePanier.name}</h2>
+                    <p class="price">${articlePanier.price * articlePanier.quantity}€</p>
                     </div>
                     <div class="cart__item__content__settings">
                     <div class="cart__item__content__settings__quantity">
-                        <p>Qté : ${convertInArray.quantity}</p>
+                        <p>Qté : ${articlePanier.quantity}</p>
                      </div>
                     </div>
                 </div>
@@ -146,9 +147,9 @@ function envoieFormulaire() {
                 for (let articleInPanier in numGetPanier) {
 
                     let articlePanier = numGetPanier[articleInPanier];
-                    let convertInArray = JSON.parse(articlePanier);
+                    
 
-                    let getIdArtPanier = convertInArray.id;
+                    let getIdArtPanier = articlePanier.id;
 
                     products.push(getIdArtPanier);
 

@@ -1,5 +1,5 @@
 createPanier()
-indicateurNbArticlePanier()
+/* indicateurNbArticlePanier() */
 
 
 /* Création de Panier */
@@ -14,10 +14,8 @@ function createPanier() {
     }
 }
 
-
-
 /* Indicateur du nombre d'articles dans le panier */
-function indicateurNbArticlePanier() {
+/* function indicateurNbArticlePanier() {
 
     let getPanier = localStorage.getItem("panierKey");
 
@@ -43,4 +41,4 @@ function indicateurNbArticlePanier() {
     }
 
     
-}
+} */
