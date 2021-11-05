@@ -139,6 +139,19 @@ h2 {
     display: none;
 }
 
+#firstN, #lastN, #addrS, #citY, #emaiL {
+    color: rgb(240, 64, 64);
+    height: auto;
+    width: max-content;
+}
+
+.borderRed {
+    border: 3px solid rgb(240, 64, 64) !important;
+}
+
+.borderGreen {
+    border: 3px solid rgb(71, 175, 71) !important;
+}
 
 /***************/
 /*Media queries*/
